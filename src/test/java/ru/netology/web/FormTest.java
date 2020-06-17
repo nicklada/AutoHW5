@@ -2,7 +2,6 @@ package ru.netology.web;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
@@ -10,17 +9,17 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.By.cssSelector;
+import static ru.netology.web.DataGenerator.*;
+
 
 public class FormTest {
 
-    private Faker faker;
-    private DataGenerator dataGenerator = new DataGenerator();
-    private String City = dataGenerator.getCity();
-    private String Date = dataGenerator.getRelevantDate();
-    private String OtherDate = dataGenerator.getOtherRelevantDate();
-    private String InvalidDate = dataGenerator.getIrrelevantDate();
-    private String Name = dataGenerator.getName();
-    private String Phone = dataGenerator.getPhone();
+    private String City = getCity();
+    private String Date = getRelevantDate(5);
+    private String OtherDate = getRelevantDate(10);
+    private String InvalidDate = getIrrelevantDate();
+    private String Name = getName();
+    private String Phone = getPhone();
 
     @Test
     void shouldSubmitRequest() {
@@ -72,7 +71,7 @@ public class FormTest {
         form.$(cssSelector("[data-test-id=date] input")).doubleClick().sendKeys(Keys.DELETE);
         form.$(cssSelector("[data-test-id=date] input")).sendKeys(Date);
         form.$(cssSelector("[name=name]")).sendKeys(Name);
-        form.$(cssSelector("[name=phone]")).sendKeys(Phone);
+        form.$(cssSelector("[name=phone]")).sendKeys(getPhone());
         form.$(cssSelector("[data-test-id=agreement]")).click();
         form.$(byText("Запланировать")).click();
         $(byText("Успешно!")).waitUntil(Condition.visible, 15000);

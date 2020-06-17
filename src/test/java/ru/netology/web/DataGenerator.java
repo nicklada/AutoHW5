@@ -21,18 +21,10 @@ public class DataGenerator {
         return randomElement;
     }
 
-    public static String getRelevantDate() {
+    public static String getRelevantDate(int days) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate today = LocalDate.now();
-        LocalDate date = today.plusDays(5);
-        date.format(formatter);
-        return date.format(formatter);
-    }
-
-    public static String getOtherRelevantDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate today = LocalDate.now();
-        LocalDate date = today.plusDays(5);
+        LocalDate date = today.plusDays(days);
         date.format(formatter);
         return date.format(formatter);
     }
@@ -47,7 +39,7 @@ public class DataGenerator {
 
     public static String getName() {
         Faker faker = new Faker(new Locale("ru"));
-        return faker.name().fullName();
+        return faker.name().lastName() + " " + faker.name().firstName();
     }
 
     public static String getPhone() {
